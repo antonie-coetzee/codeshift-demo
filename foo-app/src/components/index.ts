@@ -1,2 +1,2 @@
-export * from "./resistor"
-export * from "./transistor"
+export * from "./resistor";
+export * from "./transistor";

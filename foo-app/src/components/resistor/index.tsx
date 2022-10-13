@@ -1,6 +1,6 @@
+import { connector } from "@/lib/connector";
 import * as React from "react";
-import {connector} from "@/lib/connector"
 
-export const resistor = ()=>{
-  return <div>{connector}-resistor</div>
-}
+export const resistor = () => {
+  return <div>{connector}-resistor</div>;
+};

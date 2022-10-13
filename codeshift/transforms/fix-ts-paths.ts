@@ -1,10 +1,11 @@
 import fs from "fs";
-import { API, FileInfo } from "jscodeshift";
+import { API, FileInfo, Options } from "jscodeshift";
 import path from "path";
 import glob from "glob";
 
-const sourceRoot = path.resolve("../foo-app/src/");
-export default function transformer(file: FileInfo, api: API) {
+export default function transformer(file: FileInfo, api: API, options:Options ) {
+    const sourceRoot = path.resolve(options.root);
+
     const j = api.jscodeshift;
     const root = j(file.source);
 
@@ -28,7 +29,6 @@ export default function transformer(file: FileInfo, api: API) {
             return;
         }
         const modPathResolved = path.resolve(path.dirname(file.path), modPath);
-        console.log(modPathResolved);
         if (glob.sync(modPathResolved + "/index.*").length > 0) {
             p.value.source.value = modPath + "/index.js";
         } else {
@@ -39,13 +39,15 @@ export default function transformer(file: FileInfo, api: API) {
     root.find(j.ImportDeclaration, p => {
         return p.source.value?.toString().startsWith("@/") || false;
     }).forEach(p => {
-        const relativePath = path.relative(path.resolve(path.dirname(file.path)), sourceRoot);
-        const absolutePath = p.value.source.value?.toString().replace("@", sourceRoot);
-        const modPath = p.value.source.value?.toString().replace("@", relativePath);
-        if (glob.sync(absolutePath + "/index.*").length > 0) {
-            p.value.source.value = modPath + ".js";
+        const relativePathFromSource = path.relative(path.dirname(file.path), sourceRoot); 
+        const importPath = p.value.source.value?.toString();    
+        const relativeToSourceModPath = importPath.replace("@", relativePathFromSource);
+
+        const absoluteModPath = importPath.replace("@", sourceRoot);
+        if (glob.sync(absoluteModPath + "/index.*").length > 0) {
+            p.value.source.value = relativeToSourceModPath + "/index.js";
         } else {
-            p.value.source.value = modPath + "/index.js";
+            p.value.source.value = relativeToSourceModPath + ".js";         
         }
     });
 
