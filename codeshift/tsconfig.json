@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "target": "ESNext",
+        "jsx": "react",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "pretty": true,
+        "baseUrl": "./",
+        "lib": ["DOM", "ESNext"],
+        "importHelpers": true,
+        "types": ["jest", "node"],
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": ["node_modules"]
+}
