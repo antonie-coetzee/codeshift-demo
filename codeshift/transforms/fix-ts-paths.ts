@@ -24,6 +24,9 @@ export default function transformer(
       } else {
         p.value.source.value = modPath + ".js";
       }
+      api.report(
+        `[relative export all] old: '${modPath}', new: '${p.value.source.value}'`
+      );
     });
 
   root
@@ -41,6 +44,9 @@ export default function transformer(
       } else {
         p.value.source.value = modPath + ".js";
       }
+      api.report(
+        `[relative import] old: '${modPath}', new: '${p.value.source.value}'`
+      );
     });
 
   root
@@ -48,6 +54,7 @@ export default function transformer(
       return p.source.value?.toString().startsWith("@/") || false;
     })
     .forEach((p) => {
+      const modPath = p.value.source?.value?.toString();
       const relativePathFromSource = path.relative(
         path.dirname(file.path),
         sourceRoot
@@ -64,6 +71,9 @@ export default function transformer(
       } else {
         p.value.source.value = relativeToSourceModPath + ".js";
       }
+      api.report(
+        `[path alias] old: '${modPath}', new: '${p.value.source.value}'`
+      );
     });
 
   return root.toSource();

@@ -5,8 +5,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "fix-ts-paths": "npx jscodeshift ../foo-app/src -t ./transforms/fix-ts-paths.ts --extensions=ts,tsx --parser=tsx --print",
-    "test": "npx jscodeshift ../foo-app/src -t ./transforms/fix-ts-paths.ts --extensions=ts,tsx --parser=tsx --root=../foo-app/src --print --dry "
+    "fix-ts-paths": "npx jscodeshift ../foo-app/src -t ./transforms/fix-ts-paths.ts --extensions=ts,tsx --parser=tsx --print --root=../foo-app/src",
+    "test": "npx jscodeshift ../foo-app/src -t ./transforms/fix-ts-paths.ts --extensions=ts,tsx --parser=tsx --dry --root=../foo-app/src"
   },
   "devDependencies": {
     "@types/glob": "8.0.0",
