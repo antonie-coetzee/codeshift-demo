@@ -6,7 +6,7 @@
       "runtimeExecutable": "npm",
       "request": "launch",
       "name": "Debug Transform",
-      "runtimeArgs": ["run-script", "test"],
+      "runtimeArgs": ["run-script", "debug"],
       "skipFiles": ["<node_internals>/**"],
       "outFiles": []
     }
