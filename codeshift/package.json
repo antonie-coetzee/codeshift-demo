@@ -8,13 +8,12 @@
     "fix-ts-paths": "npx jscodeshift ../foo-app/src -t ./transforms/fix-ts-paths.ts --extensions=ts,tsx --parser=tsx --print",
     "test": "npx jscodeshift ../foo-app/src -t ./transforms/fix-ts-paths.ts --extensions=ts,tsx --parser=tsx --root=../foo-app/src --print --dry "
   },
-  "dependencies": {
+  "devDependencies": {
     "@types/glob": "8.0.0",
     "@types/jscodeshift": "0.11.5",
     "glob": "8.0.3",
-    "jscodeshift": "0.14.0"
-  },
-  "devDependencies": {
+    "jscodeshift": "0.14.0",
+    "typescript": "4.8.2",
     "@types/node": "^18.8.5"
   }
 }
