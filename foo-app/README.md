@@ -7,15 +7,15 @@
                                                                 
 when vscode 'refactor', find/replace or regex isn't enough.. 
 
-# demo problem
+# Demo problem
 
 tsc does not transpile module specifiers to be ESM compatible.
 
-# documentation
+## Documentation
 
 [TS module-resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
 
-# related issues/discussions
+## Related issues/discussions
 
 [Module path mapping is not working in generated js files](https://github.com/Microsoft/TypeScript/issues/16640)
 
