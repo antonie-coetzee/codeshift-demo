@@ -6,7 +6,7 @@ export default function transformer(
   file: FileInfo,
   api: API,
   options: Options
-) {
+): string {
   const sourceRoot = path.resolve(options.root);
 
   const j = api.jscodeshift;
@@ -28,53 +28,5 @@ export default function transformer(
         `[relative export all] old: '${modPath}', new: '${p.value.source.value}'`
       );
     });
-
-  root
-    .find(j.ImportDeclaration, (p) => {
-      return p.source?.value?.toString().startsWith(".") || false;
-    })
-    .forEach((p) => {
-      const modPath = p.value.source?.value?.toString();
-      if (modPath == null) {
-        return;
-      }
-      const modPathResolved = path.resolve(path.dirname(file.path), modPath);
-      if (glob.sync(modPathResolved + "/index.*").length > 0) {
-        p.value.source.value = modPath + "/index.js";
-      } else {
-        p.value.source.value = modPath + ".js";
-      }
-      api.report(
-        `[relative import] old: '${modPath}', new: '${p.value.source.value}'`
-      );
-    });
-
-  root
-    .find(j.ImportDeclaration, (p) => {
-      return p.source.value?.toString().startsWith("@/") || false;
-    })
-    .forEach((p) => {
-      const modPath = p.value.source?.value?.toString();
-      const relativePathFromSource = path.relative(
-        path.dirname(file.path),
-        sourceRoot
-      );
-      const importPath = p.value.source.value?.toString();
-      const relativeToSourceModPath = importPath.replace(
-        "@",
-        relativePathFromSource
-      );
-
-      const absoluteModPath = importPath.replace("@", sourceRoot);
-      if (glob.sync(absoluteModPath + "/index.*").length > 0) {
-        p.value.source.value = relativeToSourceModPath + "/index.js";
-      } else {
-        p.value.source.value = relativeToSourceModPath + ".js";
-      }
-      api.report(
-        `[path alias] old: '${modPath}', new: '${p.value.source.value}'`
-      );
-    });
-
   return root.toSource();
 }
